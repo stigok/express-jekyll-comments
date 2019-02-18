@@ -1,0 +1,7 @@
+{
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.10"
+  }
+}
