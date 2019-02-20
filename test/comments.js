@@ -78,6 +78,13 @@ describe('Comments', function () {
     assert.strictEqual(com.email, 'foo@bar.com');
   })
 
+  it('A comment id exists on returned comments', () => {
+    api.create({ subject_id: 21, body: 'hello', author: 'me' });
+    const com = api.getBySubjectId(21)[0];
+    assert.notStrictEqual(com.comment_id, undefined, 'Property not defined');
+    assert.notStrictEqual(com.comment_id, null, 'Property is not populated');
+  })
+
   it('A creation date exists on returned comments', () => {
     api.create({ subject_id: 21, body: 'hello', author: 'me' });
     const com = api.getBySubjectId(21)[0];
