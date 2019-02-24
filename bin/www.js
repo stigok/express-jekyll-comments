@@ -7,10 +7,6 @@ const commentsRouter = require('../lib/router.js');
 const app = express();
 //app.unset('powered by');
 
-// Create production database
-commentsRouter.api._db = new Database('/tmp/express-comments.db'); 
-commentsRouter.api.init();
-
 app.use('/comments', commentsRouter);
 
 app.use((err, req, res, next) => {
@@ -23,10 +19,18 @@ app.use((err, req, res, next) => {
   }
 });
 
-console.log(process.argv)
-assert(process.argv.length == 4, 'Missing arguments');
 
-const [, , port, host] = process.argv;
+// Read command line arguments
+assert(process.argv.length == 5, 'Missing arguments');
+const [, , host, port, dbpath] = process.argv;
+
+// Create production database
+commentsRouter.api._db = new Database(dbpath); 
+commentsRouter.api.init();
+
+console.log('Using database file %s', dbpath);
+
+// Start HTTP server
 app.listen(port, host, (err) => {
   console.log('Listening on %s:%s', host, port);
 });
